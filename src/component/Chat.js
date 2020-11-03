@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ChatHeader from './ChatHeader';
 import './Chat.css';
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -10,6 +10,7 @@ import { selectUser } from '../features/userSlice';
 import { selectChannelId, selectChannelName } from '../features/appSlice';
 import { useSelector } from 'react-redux';
 import db from '../firebase';
+import firebase from 'firebase';
 import { Button } from '@material-ui/core';
 
 function Chat() { 
@@ -24,19 +25,34 @@ function Chat() {
       db.collection('channels')
         .doc(channelId)
         .collection("messages")
-        .orderBy('timestamp', 'desc')
+        .orderBy('timestamp', 'asc')
         .onSnapshot((snapshot) =>
           setMessages(snapshot.docs.map((doc) => doc.data()))
         );
     }
-  }, []);
+  }, [channelId]);
+
+  const sendMessage = e => {
+    e.preventDefault();
+
+    db.collection('channels').doc(channelId).collection('messages').add({
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      message: input,
+      user: user,
+    });
+    setInput("");
+  }
 
   return (
     <div className='chat'>
       <ChatHeader channelName={channelName} />
       <div className="chat__messages">
         {messages.map((message) => (
-          <Message />
+          <Message
+            timestamp={message.timestamp}
+            message={message.message}
+            user={message.user}
+          />
         ))}        
       </div>
       <div className="chat__input">
@@ -48,7 +64,11 @@ function Chat() {
             onChange={(e) => setInput(e.target.value)}
             placeholder={`Message #${channelName}`}
           />
-          <Button className="chat__inputButton" type="submit">
+          <Button disabled={!channelId}
+            className="chat__inputButton"
+            type="submit"
+            onClick={sendMessage}
+          >
             Send Message
           </Button>
         </form>

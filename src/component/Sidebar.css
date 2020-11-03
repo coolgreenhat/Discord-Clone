@@ -22,10 +22,15 @@
 
 .sidebar__addChannel {
   cursor: pointer;
+  border-radius: 99px;
+  color: #fff;
+  background-color: #581992;
 }
+
 
 .sidebar__addChannel:hover {
   color: #fff;
+  background-color: #581992;
 }
 
 .sidebar__chennelsHeader{

@@ -6,7 +6,7 @@ import SidebarChannel from './SidebarChannel';
 import SignalCellularAltIcon from '@material-ui/icons/SignalCellularAlt';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CallIcon from '@material-ui/icons/Call';
-import { Avatar } from '@material-ui/core';
+import { Avatar, IconButton } from '@material-ui/core';
 import MicIcon from '@material-ui/icons/Mic';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -52,7 +52,9 @@ function Sidebar() {
             <ExpandMoreIcon />
             <h4>Text Channels</h4>
           </div>
+          <IconButton>
           <AddIcon onClick={handleAddChannel} className="sidebar__addChannel" />
+          </IconButton>
         </div>
         <div className="sidebar__channelsList">
           {channels.map(({ id, channel }) => (

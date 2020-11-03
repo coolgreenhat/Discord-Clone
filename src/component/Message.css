@@ -7,10 +7,25 @@
 
 .message__info {
   margin-left: 20px;
+  border: 1px solid seashell;
+  padding: 0 10px 5px 10px;
+  border-radius: 10px 20px 10px 20px;
+  background-color: seashell;
 }
 
 .message__timestamp {
   color: gray;
   margin-left: 20px;
   font-size: x-small; 
+}
+
+.message__userName {
+  color: rebeccapurple;
+}
+
+.message__content{
+  padding-top:5px;
+  padding-left: 5px;
+  color: black;
+  font-size: medium;
 }
